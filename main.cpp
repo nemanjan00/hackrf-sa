@@ -18,7 +18,7 @@ int main () {
 
 	do {
 		file.read((char*) buffer, buffer_length);
-		cout << "read " << file.gcount() << "\n";
+		//cout << "read " << file.gcount() << "\n";
 
 		for(int i = 0; i < file.gcount(); i++) {
 			int type = i % 2;
@@ -40,6 +40,8 @@ int main () {
 
 	cout << "I " << average[0] << "\n";
 	cout << "Q " << average[1] << "\n";
+
+	file.close();
 
 	return 0;
 }
