@@ -22,8 +22,6 @@ int main () {
 
 		volk_8i_s32f_convert_32f(buffer_32f, buffer, 128.0f, file.gcount());
 
-		int counter = 0;
-
 		for(int i = 0; i < file.gcount() / 2; i++) {
 			i_buffer_32f[i] = buffer[i * 2];
 			q_buffer_32f[i] = buffer[i * 2 + 1];
