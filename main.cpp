@@ -1,6 +1,6 @@
 #include <fstream>
 #include <iostream>
-#include "volk.h"
+#include "volk/volk.h"
 
 using namespace std;
 
@@ -10,37 +10,38 @@ int main () {
 	int buffer_length = 4000000;
 
 	int8_t * buffer = new int8_t [buffer_length];
+	float * buffer_32f = new float [buffer_length];
 
-	double * average = new double [2];
-	long * count = new long [2];
-	bool * started = new bool [2];
+	float * i_buffer_32f = new float [buffer_length / 2];
+	float * q_buffer_32f = new float [buffer_length / 2];
 
 	file.open("samples/95MHz-center-100MHzCW", ios::in | ios::binary);
 
 	do {
 		file.read((char*) buffer, buffer_length);
-		//cout << "read " << file.gcount() << "\n";
 
-		for(int i = 0; i < file.gcount(); i++) {
-			int type = i % 2;
+		volk_8i_s32f_convert_32f(buffer_32f, buffer, 128.0f, file.gcount());
 
-			if(started[type] == false) {
-				count[type] = 1;
-				average[type] = buffer[i];
+		int counter = 0;
 
-				started[type] = true;
-			} else {
-				average[type] =
-					((double) count[type] / (double)(count[type] + 1) * (double)average[type]) +
-					((double)buffer[i] / (count[type] + 1));
-
-				count[type]++;
-			}
+		for(int i = 0; i < file.gcount() / 2; i++) {
+			i_buffer_32f[i] = buffer[i * 2];
+			q_buffer_32f[i] = buffer[i * 2 + 2];
 		}
-	} while(file);
 
-	cout << "I " << average[0] << "\n";
-	cout << "Q " << average[1] << "\n";
+		float i_stddev;
+		float q_stddev;
+
+		float i_mean;
+		float q_mean;
+
+		volk_32f_stddev_and_mean_32f_x2(&i_stddev, &i_mean, i_buffer_32f, file.gcount() / 2);
+		volk_32f_stddev_and_mean_32f_x2(&q_stddev, &q_mean, q_buffer_32f, file.gcount() / 2);
+
+		cout << "I mean " << i_mean << " stddev " << i_stddev << "\n";
+		cout << "Q mean " << q_mean << " stddev " << q_stddev << "\n";
+		cout << "\n";
+	} while(file);
 
 	file.close();
 
