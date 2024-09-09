@@ -10,12 +10,15 @@ int main () {
 
 	int8_t * buffer = new int8_t [buffer_length];
 
+	double * average = new double [2];
+	long * count = new long [2];
+
 	file.open("samples/95MHz-center-100MHzCW", ios::in | ios::binary);
 
-	while(file) {
+	do {
 		file.read((char*) buffer, buffer_length);
-		cout << buffer[0];
-	}
+		cout << "read " << file.gcount() << "\n";
+	} while(file);
 
 	return 0;
 }
