@@ -23,8 +23,6 @@ int main () {
 		for(int i = 0; i < file.gcount(); i++) {
 			int type = i % 2;
 
-			cout << buffer[i] << "\n";
-
 			if(started[type] == false) {
 				count[type] = 1;
 				average[type] = buffer[i];
