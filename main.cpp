@@ -26,7 +26,7 @@ int main () {
 
 		for(int i = 0; i < file.gcount() / 2; i++) {
 			i_buffer_32f[i] = buffer[i * 2];
-			q_buffer_32f[i] = buffer[i * 2 + 2];
+			q_buffer_32f[i] = buffer[i * 2 + 1];
 		}
 
 		float i_stddev;
