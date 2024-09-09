@@ -32,8 +32,9 @@ while True:
 
     sample_int = int.from_bytes(sample)
 
-    print(sample_index % 2)
+    averages[sample_index % 2].add(sample_int)
 
     sample_index = sample_index + 1
 
-print(average)
+print(averages[0].get_average())
+print(averages[1].get_average())
