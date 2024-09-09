@@ -23,13 +23,17 @@ int main () {
 		for(int i = 0; i < file.gcount(); i++) {
 			int type = i % 2;
 
+			cout << buffer[i] << "\n";
+
 			if(started[type] == false) {
 				count[type] = 1;
 				average[type] = buffer[i];
 
 				started[type] = true;
 			} else {
-				average[type] = ((double) count[type] / (double)(count[type] + 1) * (double)average[type]) + ((double)buffer[i] / (count[type] + 1));
+				average[type] =
+					((double) count[type] / (double)(count[type] + 1) * (double)average[type]) +
+					((double)buffer[i] / (count[type] + 1));
 
 				count[type]++;
 			}
