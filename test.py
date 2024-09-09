@@ -36,5 +36,5 @@ while True:
 
     sample_index = sample_index + 1
 
-print(averages[0].get_average())
-print(averages[1].get_average())
+print("I", averages[0].get_average())
+print("Q", averages[1].get_average())
