@@ -11,7 +11,7 @@ class MovingAverage:
             self.started = True
         else:
             self.average = (self.count / (self.count + 1) * self.average) + (num / (self.count + 1))
-            count = count + 1
+            self.count = self.count + 1
 
         return self.average
 
